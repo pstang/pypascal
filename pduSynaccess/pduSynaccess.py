@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 """
 SynAccess PDU control library.
@@ -34,6 +34,7 @@ Example Usage:
   pduCh.off()
 """
 
+# system
 import argparse
 import logging
 import serial

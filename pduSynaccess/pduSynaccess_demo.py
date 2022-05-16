@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 """
 SynAccess PDU control library demonstration.
@@ -6,13 +6,14 @@ Copyright (c) 2022 Pascal Stang
 This program comes with ABSOLUTELY NO WARRANTY.
 """
 
+# system
 import logging
 import sys
 import time
-
+# package
 import pduSynaccess
 
-HOST = '192.168.1.113'
+HOST = '192.168.1.100'
 
 DELAY = 0.0
 
