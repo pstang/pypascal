@@ -15,61 +15,87 @@ import ptuFlir
 
 PORT = '/dev/ttyUSB0'
 
+def ptuConfigure(ptu):
+  # Reset to factory defaults.
+  ptu.command(cmd='DF')
+  # Set baudrate.
+  ptu.command(cmd='@(115200,0,T)')
+  # Set back to terse feedback.
+  ptu.command(cmd='FT')
+  # Reset axes.
+  ptu.command(cmd='RE')
+  # Set speed.
+  ptu.command(cmd='PS', args=[2000])
+  ptu.command(cmd='TS', args=[2000])
+  # Save config as default.
+  ptu.command(cmd='DS')
+
+def ptuQueryOperations(ptu):
+  print(ptu.query('O'))
+  print(ptu.getLimitsNative())
+  print(ptu.getPositionNative())
+
 def ptuBasicOperations(ptu):
   ptu.query(cmd='PP')
   ptu.query(cmd='TP')
-  ptu.command(cmd='S')
+  ptu.command(cmd='I')
   ptu.command(cmd='PP', args=[1000])
-  ptu.command(cmd='TP', args=[200])
   ptu.command(cmd='A')
   ptu.command(cmd='PP', args=[-1000])
-  ptu.command(cmd='TP', args=[-200])
   ptu.command(cmd='A')
   ptu.command(cmd='PP', args=[0])
+  ptu.command(cmd='A')
+
+  ptu.command(cmd='TP', args=[1000])
+  ptu.command(cmd='A')
+  ptu.command(cmd='TP', args=[-1000])
+  ptu.command(cmd='A')
   ptu.command(cmd='TP', args=[0])
   ptu.command(cmd='A')
 
-def ptuPanTiltOperations(ptu):
-  ptu.setPanTiltNative(1000,200)
-  print(ptu.getPanTiltNative())
-  ptu.setPanTiltNative(-1000,-200)
-  print(ptu.getPanTiltNative())
-  ptu.setPanTiltNative(0,0)
-  print(ptu.getPanTiltNative())
+def ptuPositionOperations(ptu):
+  ptu.setPositionDegrees(90,10)
+  print(ptu.getPositionNative())
+  ptu.setPositionDegrees(-90,-89)
+  print(ptu.getPositionNative())
+  ptu.setPositionDegrees(0,0)
+  print(ptu.getPositionNative())
 
 def ptuBoxScan(ptu, pan_width, tilt_width):
-  ptu.setPanTiltNative(pan_width,tilt_width)
-  print(ptu.getPanTiltNative())
-  ptu.setPanTiltNative(-pan_width,tilt_width)
-  print(ptu.getPanTiltNative())
-  ptu.setPanTiltNative(-pan_width,-tilt_width)
-  print(ptu.getPanTiltNative())
-  ptu.setPanTiltNative(pan_width,-tilt_width)
-  print(ptu.getPanTiltNative())
-  ptu.setPanTiltNative(pan_width,tilt_width)
-  print(ptu.getPanTiltNative())
+  ptu.setPositionDegrees(pan_width,tilt_width)
+  print(ptu.getPositionNative())
+  ptu.setPositionDegrees(-pan_width,tilt_width)
+  print(ptu.getPositionNative())
+  ptu.setPositionDegrees(-pan_width,-tilt_width)
+  print(ptu.getPositionNative())
+  ptu.setPositionDegrees(pan_width,-tilt_width)
+  print(ptu.getPositionNative())
+  ptu.setPositionDegrees(pan_width,tilt_width)
+  print(ptu.getPositionNative())
 
-  ptu.setPanTiltNative(0,0)
-  print(ptu.getPanTiltNative())
+  ptu.setPositionDegrees(0,0)
+  print(ptu.getPositionNative())
   pass
 
 def main():
   # Create instance.
   # Set a high logging level so we can see our operations.
+  # Timeout of 10seconds so we can wait for motion completion.
   ptu = ptuFlir.ptu(serialport=PORT,
                     baudrate=115200,
-                    timeout=5,
-                    loglevel=logging.DEBUG)
+                    timeout=10,
+                    loglevel=logging.INFO)
   # Open the channel to the PTU.
   ptu.open()
 
-  # Reset axes.
-  #ptu.command(cmd='RE')
+  # Configure (run only when needed).
+  #ptuConfigure(ptu)
 
   # Do some operations.
+  ptuQueryOperations(ptu)
   ptuBasicOperations(ptu)
-  ptuPanTiltOperations(ptu)
-  ptuBoxScan(ptu, 1000, 200)
+  ptuPositionOperations(ptu)
+  ptuBoxScan(ptu, 10, 10)
 
   # Close the channel.
   ptu.close()
