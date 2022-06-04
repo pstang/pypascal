@@ -15,6 +15,7 @@ Contents
 --------
 - /influxSender          - InfluxDB helper library for sending data to influx time-series databases
 - /fpgacomm              - FPGA register access module via UART
-- /pduSynaccess          - SynAccess Power Distribution Unit (PDU) driver library
-- /ptuFlir               - FLIR Pan-Tilt Unit (PTU) E-series control library
+- /pduSynaccess          - Power Distribution Unit (PDU) driver library for SynAccess devices
+- /ptuFlir               - Pan-Tilt Unit (PTU) control library for FLIR E-series
+- /rfswitchMcl           - RF switch control library for MiniCircuits RC-series
 - /watlowf4              - Watlow F4 temperature controller driver library
