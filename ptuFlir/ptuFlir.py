@@ -46,7 +46,6 @@ Example Usage:
 import argparse
 import math
 import logging
-import parse
 import serial
 import socket
 import sys
