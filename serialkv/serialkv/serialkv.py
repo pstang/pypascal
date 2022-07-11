@@ -102,7 +102,7 @@ class serialkv:
     self._log.debug("Parse {:}".format(kvdict))
     return kvdict
 
-def test:
+def test():
   kvdict = skv.parse('PD0:123 PD1:456 PD2:222 PD3:333\r\n')
   print(kvdict)
   kvdict = skv.parse(':123 PD1:456 PD2:222 PD3:333\r\n')
