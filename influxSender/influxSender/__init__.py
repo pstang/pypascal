@@ -1,2 +1,2 @@
-# Re-export the InfluxSender class for ergonomic convenience.
+# Re-export the class for ergonomic convenience.
 from .influxSender import InfluxSender

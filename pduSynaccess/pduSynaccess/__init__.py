@@ -1,2 +1,2 @@
-# Re-export the pdu class for ergonomic convenience.
+# Re-export the class for ergonomic convenience.
 from .pduSynaccess import pdu
