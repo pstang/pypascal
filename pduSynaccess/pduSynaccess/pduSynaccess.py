@@ -66,7 +66,10 @@ class pdu:
     # Send logout command to gracefully close socket connection.
     sock.send('logout\r'.encode('utf-8'))
     # Use brief delay to allow device to respond.
-    time.sleep(0.05)
+    # Delay was increased to 300ms to work properly with slower 8ch Synaccess PDUs.
+    # TODO(pstang): Change this implementation to a continuous read looking for
+    # command echo response, up to a timeout value.
+    time.sleep(0.3)
     # Capture the recevied data from session.
     rxstring = sock.recv(4096)
     sock.close()
