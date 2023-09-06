@@ -136,7 +136,7 @@ class rfswitch:
       opstr = opstr + "{:d}".format(arg)
     (success, reply) = self.operation(opstr)
     # Check for reply of '1' to indicate command success.
-    if reply is not '1':
+    if reply != '1':
       success = False
     self._log.info("command: {:s} => {}".format(opstr, ['FAILED', 'OK'][success]))
     return success
@@ -188,7 +188,6 @@ class rfswitch:
       switch = chr(switch + 65)
     # Compose and send the operation.
     state = int(state)
-    print(self.states)
     if self.states in [2, 'D']:
       cmd = "SET{:}={:d}".format(switch, state)
     elif self.states in [4, 6]:
