@@ -43,9 +43,9 @@ import sys
 import time
 
 class pdu:
-  def __init__(self, uri, ch=None, loglevel=logging.ERROR):
+  def __init__(self, uri, ch=None, port=23, loglevel=logging.ERROR):
     self._uri = uri
-    self._port = 23
+    self._port = port
     self._ch = ch
     logging.basicConfig(format = '%(levelname)s:%(name)s:%(message)s', level=loglevel)
     self._log = logging.getLogger(__name__)
